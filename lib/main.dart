@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Timer? timer;
 
   Future<void> sendToDiscordWebhook(String message) async {
-    print("start timer");
+    //print("start timer");
     String webhookUrl =
         "https://discord.com/api/webhooks/1165290854416646225/NFI2Puw2SYeWNetzEm9sr_KtCSjEA-6CS54hTQZDCy7LD-EYLuv0rM2oioO7ObazFZvU";
     final Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -42,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (response.statusCode == 204) {
-      print('Message sent successfully to Discord webhook');
+      //print('Message sent successfully to Discord webhook');
       setState(() {
         messageCount++;
       });
     } else {
-      print(
+      //print(
           'Failed to send message to Discord webhook. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      //print('Response body: ${response.body}');
     }
   }
 
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (buttonPressed) {
                   x = ('Stop Sending');
                   buttonPressed = false;
-                  timer = Timer.periodic(Duration(seconds: 10), (timer) {
+                  const Timer.periodic(Duration(seconds: 10), (timer) {
                     sendToDiscordWebhook("hkhttat now");
                   });
                 } else {
