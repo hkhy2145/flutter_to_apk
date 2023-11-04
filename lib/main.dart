@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:telephony/telephony.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,71 +15,38 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var buttonPressed = false;
-  var x = "نص";
-  int messageCount = 0;
-  Timer? timer;
+  String latestSms = "No SMS available";
 
-  Future<void> sendToDiscordWebhook(String message) async {
-    String webhookUrl =
-        "https://discord.com/api/webhooks/1165290854416646225/NFI2Puw2SYeWNetzEm9sr_KtCSjEA-6CS54hTQZDCy7LD-EYLuv0rM2oioO7ObazFZvU";
-    final Map<String, String> headers = {'Content-Type': 'application/json'};
-    final Map<String, dynamic> data = {'content': message};
-    final String jsonData = json.encode(data);
-
-    final response = await http.post(
-      Uri.parse(webhookUrl),
-      headers: headers,
-      body: jsonData,
-    );
-
-    if (response.statusCode == 204) {
+  Future<void> fetchLatestSms() async {
+    Telephony telephony = Telephony.instance;
+    List<SmsMessage> messages = await telephony.getInboxSms();
+    if (messages.isNotEmpty) {
+      SmsMessage latestMessage = messages.first;
       setState(() {
-        messageCount++;
+        latestSms = "Latest SMS: ${latestMessage.body}";
       });
-    } else {
-      messageCount = -1;
     }
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('إرسال رسالة إلى Discord'),
+        title: Text('SMS Reader'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('عدد الرسائل المرسلة: $messageCount'),
+            Text(latestSms),
             ElevatedButton(
-              onPressed: () {
-                if (buttonPressed) {
-                  x = ('توقف عن الإرسال');
-                  buttonPressed = false;
-                  Timer.periodic(Duration(seconds: 10), (timer) {
-                    sendToDiscordWebhook("نص الرسالة");
-                  });
-                } else {
-                  x = ('ابدأ الإرسال');
-                  buttonPressed = true;
-                }
-              },
-              child: Text(x),
+              onPressed: fetchLatestSms,
+              child: Text('Fetch Latest SMS'),
             ),
           ],
         ),
