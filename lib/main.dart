@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (buttonPressed) {
                   x = ('توقف عن الإرسال');
                   buttonPressed = false;
-                  timer = Timer.periodic(Duration(seconds: 10), (timer) {
+                  Timer.periodic(Duration(seconds: 10), (timer) {
                     sendToDiscordWebhook("نص الرسالة");
                   });
                 } else {
