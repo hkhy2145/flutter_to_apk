@@ -48,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
         messageCount++;
       });
     } else {
-      //print(
-          'Failed to send message to Discord webhook. Status code: ${response.statusCode}');
+      messageCount=-1;
+      //print('Failed to send message to Discord webhook. Status code: ${response.statusCode}');
       //print('Response body: ${response.body}');
     }
   }
