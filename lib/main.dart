@@ -6,6 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key); // أضفت مُعرِّف "key" هنا
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -46,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(latestSms),
             ElevatedButton(
               onPressed: fetchLatestSms,
-              child: Text('Fetch Latest SMS'),
+              child: const Text('Fetch Latest SMS'),
             ),
           ],
         ),
