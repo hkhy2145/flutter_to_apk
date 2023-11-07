@@ -10,9 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.5
-  telephony: ^0.2.0
-  flutter_background_service: ^5.0.2
-  flutter_sms: ^2.3.3
+  smooth_page_indicator: ^1.1.0
 
 
 dev_dependencies:
