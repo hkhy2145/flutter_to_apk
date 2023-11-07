@@ -10,6 +10,20 @@ class hkhtatt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffe2e5e7),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xff3a57e8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
+        leading: Icon(
+          Icons.arrow_back,
+          color: Color(0xff212435),
+          size: 24,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
